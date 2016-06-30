@@ -2,6 +2,12 @@
 datalib = {}
 datalib.table = {} -- internal table global
 
+-- logger
+function datalib.log(content, log_type)
+  if log_type == nil then log_type = "action" end
+  minetest.log(log_type, "[datalib] "..content)
+end
+
 -- global path variables
 datalib.modpath = minetest.get_modpath("datalib") -- modpath
 datalib.worldpath = minetest.get_worldpath() -- worldpath
