@@ -56,6 +56,16 @@ function datalib.write(path, data, serialize)
   datalib.log('Wrote "'..data..'" to '..path) -- log
 end
 
+-- append to file
+function datalib.append(path, data, serialize)
+  if not serialize then local serialize = true end -- if blank serialize = true
+  local f = io.open(path, "a") -- open file for writing
+  if serialize == true then local data = minetest.serialize(data) end -- serialize data
+  f:write(data) -- write data
+  f:close() -- close file
+  datalib.log('Wrote "'..data..'" to '..path) -- log
+end
+
 -- load file
 function datalib.read(path, deserialize)
   if not deserialize then local deserialize = true end -- if blank deserialize = true
