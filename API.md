@@ -17,32 +17,32 @@ API for manipulating data stored within external files. Global variables are pro
 
 Initializes directory with in the world path in which datalib stores most of its data. Must be run before data can be written within the `datapath` (called within `init.lua`).
 
-### check_file
+### exists
 **Usage:** `datalib.exists(path)`
 
 Checks the file specified through `path` returning true if it exists, and false if it does not.
 
-### create_file
+### create
 **Usage:** `datalib.create(path)`
 
 Create file in location specified by `path`. Returns true if already exists, nothing if creation is successful, also printing like output to the log.
 
-### write_file
+### write
 **Usage:** `datalib.write(path, data, serialize)`
 
 Write data to file. File path is specified in `path`. Data to write is specified with field `data` and supports any value including strings, booleans, and integers. The `serialize` option tells datalib whether or not to run `minetest.serialize` on the data before writing, and is by default set to `true` if left blank.
 
-### load_file
+### read
 **Usage:** `datalib.read(path, deserialize)`
 
 Load data from file (`path`) and return through variable `data`. The `deserialize` option tells datalib whether or not to run `minetest.deserialize` on the data before returning, and is by default set to `true` if left blank.
 
-### write_table
+### table_write
 **Usage:** `datalib.table_write(path, table)`
 
 Write table to file. File path is specified in `path`. Table to write is specified with field `table` and is designed for use with tables. The only difference between `write_table` and `write_file` is that `write_table` always serializes the data with `minetest.serialize` before writing because tables cannot be directly written to files, however, they must first be converted to strings through serialization.
 
-### load_table
+### table_load
 **Usage:** `datalib.table_load(path)`
 
 Load table from file (`path`) and return through variable `table`. The only difference between `load_table` and `load_file` is that `load_table` always deserializes the data with `minetest.deserialize` to convert previously written string back to a table.
