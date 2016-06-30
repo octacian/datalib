@@ -1,5 +1,6 @@
 -- datalib/init.lua
 datalib = {}
+datalib.table = {} -- internal table global
 
 -- global path variables
 datalib.modpath = minetest.get_modpath("datalib") -- modpath
@@ -65,7 +66,7 @@ function datalib.read(path, deserialize)
 end
 
 -- write table to file
-function datalib.table_write(path, intable)
+function datalib.table.write(path, intable)
   local intable = minetest.serialize(intable) -- serialize intable
   local f = io.open(path, "w") -- open file for writing
   f:write(intable) -- write intable
@@ -74,7 +75,7 @@ function datalib.table_write(path, intable)
 end
 
 -- load table from file
-function datalib.table_load(path)
+function datalib.table.load(path)
   local f = io.open(path, "r") -- open file for reading
   local externaltable = minetest.deserialize(f:read()) -- deserialize and read externaltable
   f:close() -- close file
