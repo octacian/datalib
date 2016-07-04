@@ -43,7 +43,7 @@ end
 -- create file
 function datalib.create(path)
   -- check if file already exists
-  if datalib.check_file(path) == true then
+  if datalib.exists(path) == true then
     datalib.log("File ("..path..") already exists.") -- log
     return true -- exit and return
   end
@@ -101,7 +101,7 @@ end
 -- dofile
 function datalib.dofile(path)
   -- check if file exists
-  if datalib.check_file(path) == true then
+  if datalib.exists(path) == true then
     dofile(path)
     return true -- return true, successful
   else
