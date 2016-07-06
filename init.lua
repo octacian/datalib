@@ -54,7 +54,7 @@ end
 
 -- write to file
 function datalib.write(path, data, serialize)
-  if not serialize then local serialize = true end -- if blank serialize = true
+  if not serialize then local serialize = false end -- if blank serialize = true
   local f = io.open(path, "w") -- open file for writing
   if serialize == true then local data = minetest.serialize(data) end -- serialize data
   f:write(data) -- write data
@@ -64,7 +64,7 @@ end
 
 -- append to file
 function datalib.append(path, data, serialize)
-  if not serialize then local serialize = true end -- if blank serialize = true
+  if not serialize then local serialize = false end -- if blank serialize = true
   local f = io.open(path, "a") -- open file for writing
   if serialize == true then local data = minetest.serialize(data) end -- serialize data
   f:write(data) -- write data
@@ -74,7 +74,6 @@ end
 
 -- load file
 function datalib.read(path, deserialize)
-  if not deserialize then local deserialize = true end -- if blank deserialize = true
   local f = io.open(path, "r") -- open file for reading
   local data = f:read() -- read and store file data in variable data
   if deserialize == true then local data = minetest.deserialize(data) end -- deserialize data
