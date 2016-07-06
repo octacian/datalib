@@ -54,6 +54,7 @@ end
 
 -- write to file
 function datalib.write(path, data, serialize)
+  if datalib.exists(path) ~= true then return false end -- check if exists
   if not serialize then local serialize = false end -- if blank serialize = true
   local f = io.open(path, "w") -- open file for writing
   if serialize == true then local data = minetest.serialize(data) end -- serialize data
@@ -64,6 +65,7 @@ end
 
 -- append to file
 function datalib.append(path, data, serialize)
+  if datalib.exists(path) ~= true then return false end -- check if exists
   if not serialize then local serialize = false end -- if blank serialize = true
   local f = io.open(path, "a") -- open file for writing
   if serialize == true then local data = minetest.serialize(data) end -- serialize data
@@ -74,6 +76,7 @@ end
 
 -- load file
 function datalib.read(path, deserialize)
+  if datalib.exists(path) ~= true then return false end -- check if exists
   local f = io.open(path, "r") -- open file for reading
   local data = f:read() -- read and store file data in variable data
   if deserialize == true then local data = minetest.deserialize(data) end -- deserialize data
@@ -82,6 +85,7 @@ end
 
 -- write table to file
 function datalib.table.write(path, intable)
+  if datalib.exists(path) ~= true then return false end -- check if exists
   local intable = minetest.serialize(intable) -- serialize intable
   local f = io.open(path, "w") -- open file for writing
   f:write(intable) -- write intable
@@ -90,7 +94,8 @@ function datalib.table.write(path, intable)
 end
 
 -- load table from file
-function datalib.table.load(path)
+function datalib.table.read(path)
+  if datalib.exists(path) ~= true then return false end -- check if exists
   local f = io.open(path, "r") -- open file for reading
   local externaltable = minetest.deserialize(f:read()) -- deserialize and read externaltable
   f:close() -- close file
