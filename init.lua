@@ -17,6 +17,9 @@ local modpath = datalib.modpath
 local worldpath = datalib.worldpath
 local datapath = datalib.datapath
 
+-- shortcuts
+datalib.cp = datalib.copy
+
 -- check if datalib world folder exists
 function datalib.initdata()
   local f = io.open(datapath)
@@ -74,13 +77,22 @@ function datalib.append(path, data, serialize)
   datalib.log('Wrote "'..data..'" to '..path) -- log
 end
 
--- load file
+-- read file
 function datalib.read(path, deserialize)
   if datalib.exists(path) ~= true then return false end -- check if exists
   local f = io.open(path, "r") -- open file for reading
   local data = f:read() -- read and store file data in variable data
   if deserialize == true then local data = minetest.deserialize(data) end -- deserialize data
   return data -- return file contents
+end
+
+-- copy file
+function datalib.copy(path, new)
+  if not datalib.exists(path) then return path.." does not exist." end -- check if path exists
+  local old = datalib.read(path, false) -- read
+  datalib.write(new, old, false) -- write
+  old = nil -- unset old
+  return true -- successful
 end
 
 -- write table to file

@@ -37,6 +37,12 @@ Write data to file. File path is specified in `path`. Data to write is specified
 
 Load data from file (`path`) and return through variable `data`. The `deserialize` option tells datalib whether or not to run `minetest.deserialize` on the data before returning, and is by default set to `true` if left blank.
 
+### copy
+**Usage:** `datalib.copy(path, new)`
+**Shortcut:** `datalib.cp(path, new)`
+
+Copy the contents of a file to another file. `path` indicates the location of the original, while `new` indicates the path where the copy will be placed.
+
 ### table.write
 **Usage:** `datalib.table.write(path, table)`
 
