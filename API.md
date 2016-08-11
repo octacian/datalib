@@ -22,6 +22,11 @@ Initializes directory with in the world path in which datalib stores most of its
 
 Checks the file specified through `path` returning true if it exists, and false if it does not.
 
+### mkdir
+**Usage:** `datalib.mkdir(path)`
+
+Make a directory at the specified `path`.
+
 ### create
 **Usage:** `datalib.create(path)`
 

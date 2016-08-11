@@ -43,6 +43,21 @@ function datalib.exists(path)
   if f ~= nil then f:close() return true else return false end
 end
 
+-- create folder
+function datalib.mkdir(path)
+  local f = io.open(path)
+  if not f then
+    if minetest.mkdir then
+      minetest.mkdir(path) -- create directory if minetest.mkdir is available
+      return
+    else
+      os.execute('mkdir "'..path..'"') -- create directory with os mkdir command
+      return
+    end
+  end
+  f:close() -- close file
+end
+
 -- create file
 function datalib.create(path)
   -- check if file already exists
