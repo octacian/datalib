@@ -81,7 +81,7 @@ end
 function datalib.read(path, deserialize)
   if datalib.exists(path) ~= true then return false end -- check if exists
   local f = io.open(path, "r") -- open file for reading
-  local data = f:read() -- read and store file data in variable data
+  local data = f:read("*all") -- read and store file data in variable data
   if deserialize == true then local data = minetest.deserialize(data) end -- deserialize data
   return data -- return file contents
 end
@@ -109,7 +109,7 @@ end
 function datalib.table.read(path)
   if datalib.exists(path) ~= true then return false end -- check if exists
   local f = io.open(path, "r") -- open file for reading
-  local externaltable = minetest.deserialize(f:read()) -- deserialize and read externaltable
+  local externaltable = minetest.deserialize(f:read("*all")) -- deserialize and read externaltable
   f:close() -- close file
   return externaltable
 end
