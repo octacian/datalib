@@ -103,8 +103,12 @@ end
 
 -- copy file
 function datalib.copy(path, new)
-  if not datalib.exists(path) then return path.." does not exist." end -- check if path exists
+  if not datalib.exists(path) then
+    datalib.log(path.." does not exist. Cannot copy file.")
+    return path.." does not exist."
+  end -- check if path exists
   local old = datalib.read(path, false) -- read
+  datalib.create(new) -- create new
   datalib.write(new, old, false) -- write
   old = nil -- unset old
   return true -- successful
