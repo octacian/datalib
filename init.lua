@@ -59,7 +59,7 @@ function datalib.mkdir(path)
 end
 
 -- create file
-function datalib.create(path)
+function datalib.create(path, log)
   -- check if file already exists
   if datalib.exists(path) == true then
     datalib.log("File ("..path..") already exists.") -- log
@@ -67,29 +67,29 @@ function datalib.create(path)
   end
   local f = io.open(path, "w") -- create file
   f:close() -- close file
-  datalib.log("Created file "..path) -- log
+  if log ~= false then datalib.log("Created file "..path) end -- log
 end
 
 -- write to file
-function datalib.write(path, data, serialize)
+function datalib.write(path, data, serialize, log)
   if datalib.exists(path) ~= true then return false end -- check if exists
   if not serialize then local serialize = false end -- if blank serialize = true
   local f = io.open(path, "w") -- open file for writing
   if serialize == true then local data = minetest.serialize(data) end -- serialize data
   f:write(data) -- write data
   f:close() -- close file
-  datalib.log('Wrote "'..data..'" to '..path) -- log
+  if log ~= false then datalib.log('Wrote "'..data..'" to '..path) end -- log
 end
 
 -- append to file
-function datalib.append(path, data, serialize)
+function datalib.append(path, data, serialize, log)
   if datalib.exists(path) ~= true then return false end -- check if exists
   if not serialize then local serialize = false end -- if blank serialize = true
   local f = io.open(path, "a") -- open file for writing
   if serialize == true then local data = minetest.serialize(data) end -- serialize data
   f:write(data) -- write data
   f:close() -- close file
-  datalib.log('Wrote "'..data..'" to '..path) -- log
+  if log ~= false then datalib.log('Appended "'..data..'" to '..path) end -- log
 end
 
 -- read file
@@ -102,26 +102,27 @@ function datalib.read(path, deserialize)
 end
 
 -- copy file
-function datalib.copy(path, new)
+function datalib.copy(path, new, log)
   if not datalib.exists(path) then
     datalib.log(path.." does not exist. Cannot copy file.")
     return path.." does not exist."
   end -- check if path exists
   local old = datalib.read(path, false) -- read
-  datalib.create(new) -- create new
-  datalib.write(new, old, false) -- write
+  datalib.create(new, false) -- create new
+  datalib.write(new, old, false, false) -- write
   old = nil -- unset old
+  if log ~= false then datalib.log("Copied "..path.." to "..new) end -- log
   return true -- successful
 end
 
 -- write table to file
-function datalib.table.write(path, intable)
+function datalib.table.write(path, intable, log)
   if datalib.exists(path) ~= true then return false end -- check if exists
   local intable = minetest.serialize(intable) -- serialize intable
   local f = io.open(path, "w") -- open file for writing
   f:write(intable) -- write intable
   f:close() -- close file
-  datalib.log("Wrote table to "..path)
+  if log ~= false then datalib.log("Wrote table to "..path) end -- write table
 end
 
 -- load table from file
