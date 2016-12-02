@@ -27,6 +27,11 @@ Checks the file specified through `path` returning true if it exists, and false 
 
 Make a directory at the specified `path`.
 
+### rmdir
+**Usage:** `datalib.rmdir(path)`
+
+Recursively delete all contents of a directory (files, sub-directories, etc...)
+
 ### create
 **Usage:** `datalib.create(path)`
 

@@ -58,6 +58,32 @@ function datalib.mkdir(path)
   f:close() -- close file
 end
 
+-- remove directory
+function datalib.rmdir(path)
+  -- [local function] remove files
+  local function rm_files(ppath, files)
+    for _, f in ipairs(files) do
+      os.remove(ppath.."/"..f)
+    end
+  end
+
+  -- [local function] check and rm dir
+  local function rm_dir(dpath)
+    local files = minetest.get_dir_list(dpath, false)
+    local subdirs = minetest.get_dir_list(dpath, true)
+    rm_files(dpath, files)
+    if subdirs then
+      for _, d in ipairs(subdirs) do
+        rm_dir(dpath.."/"..d)
+      end
+    end
+    os.remove(dpath)
+  end
+
+  rm_dir(path)
+  if log ~= false then datalib.log("Recursively removed directory at "..path) end -- log
+end
+
 -- create file
 function datalib.create(path, log)
   -- check if file already exists
