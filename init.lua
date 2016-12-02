@@ -54,12 +54,16 @@ function datalib.mkdir(path)
       os.execute('mkdir "'..path..'"') -- create directory with os mkdir command
       return
     end
+  else
   end
   f:close() -- close file
+  return true
 end
 
 -- remove directory
-function datalib.rmdir(path)
+function datalib.rmdir(path, log)
+  if not io.open(path) then return false end -- file doesn't exist
+
   -- [local function] remove files
   local function rm_files(ppath, files)
     for _, f in ipairs(files) do
@@ -98,7 +102,6 @@ end
 
 -- write to file
 function datalib.write(path, data, serialize, log)
-  if datalib.exists(path) ~= true then return false end -- check if exists
   if not serialize then local serialize = false end -- if blank serialize = true
   local f = io.open(path, "w") -- open file for writing
   if serialize == true then local data = minetest.serialize(data) end -- serialize data
@@ -109,7 +112,6 @@ end
 
 -- append to file
 function datalib.append(path, data, serialize, log)
-  if datalib.exists(path) ~= true then return false end -- check if exists
   if not serialize then local serialize = false end -- if blank serialize = true
   local f = io.open(path, "a") -- open file for writing
   if serialize == true then local data = minetest.serialize(data) end -- serialize data
@@ -131,7 +133,7 @@ end
 function datalib.copy(path, new, log)
   if not datalib.exists(path) then
     datalib.log(path.." does not exist. Cannot copy file.")
-    return path.." does not exist."
+    return false
   end -- check if path exists
   local old = datalib.read(path, false) -- read
   datalib.create(new, false) -- create new
@@ -143,7 +145,6 @@ end
 
 -- write table to file
 function datalib.table.write(path, intable, log)
-  if datalib.exists(path) ~= true then return false end -- check if exists
   local intable = minetest.serialize(intable) -- serialize intable
   local f = io.open(path, "w") -- open file for writing
   f:write(intable) -- write intable

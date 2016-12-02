@@ -25,43 +25,48 @@ Checks the file specified through `path` returning true if it exists, and false 
 ### mkdir
 **Usage:** `datalib.mkdir(path)`
 
-Make a directory at the specified `path`.
+Make a directory at the specified `path`. Returns `true` if directory already exists.
 
 ### rmdir
 **Usage:** `datalib.rmdir(path)`
 
-Recursively delete all contents of a directory (files, sub-directories, etc...)
+Recursively delete all contents of a directory (files, sub-directories, etc...). Returns `false` if directory does not exist.
 
 ### create
 **Usage:** `datalib.create(path)`
 
-Create file in location specified by `path`. Returns true if already exists, nothing if creation is successful, also printing like output to the log.
+Create file in location specified by `path`. Returns `true` if already exists, nothing if creation is successful.
 
 ### write
 **Usage:** `datalib.write(path, data, serialize)`
 
-Write data to file. File path is specified in `path`. Data to write is specified with field `data` and supports any value including strings, booleans, and integers. The `serialize` option tells datalib whether or not to run `minetest.serialize` on the data before writing, and is by default set to `true` if left blank.
+Write data to file. File path is specified in `path`. Data to write is specified with field `data` and supports any value including strings, booleans, and integers. The `serialize` option tells datalib whether or not to run `minetest.serialize` on the data before writing, and is by default set to `false` if left blank.
+
+### append
+**Usage:** `datalib.append(path, data, serialize)`
+
+Append data to file. File path is specified in `path`. Data to append is specified with field `data` and supports any value including strings, booleans, and integers. The `serialize` option tells datalib whether or not to run `minetest.serialize` on the data before writing, and is by default set to `false` if left blank.
 
 ### read
 **Usage:** `datalib.read(path, deserialize)`
 
-Load data from file (`path`) and return through variable `data`. The `deserialize` option tells datalib whether or not to run `minetest.deserialize` on the data before returning, and is by default set to `true` if left blank.
+Load data from file (`path`) and return through variable `data`. The `deserialize` option tells datalib whether or not to run `minetest.deserialize` on the data before returning, and is by default set to `true` if left blank. Returns `false` if file does not exist.
 
 ### copy
 **Usage:** `datalib.copy(path, new)`
 **Shortcut:** `datalib.cp(path, new)`
 
-Copy the contents of a file to another file. `path` indicates the location of the original, while `new` indicates the path where the copy will be placed.
+Copy the contents of a file to another file. `path` indicates the location of the original, while `new` indicates the path where the copy will be placed. Returns false if file specified by `path` does not exist.
 
 ### table.write
 **Usage:** `datalib.table.write(path, table)`
 
 Write table to file. File path is specified in `path`. Table to write is specified with field `table` and is designed for use with tables. The only difference between `write_table` and `write_file` is that `write_table` always serializes the data with `minetest.serialize` before writing because tables cannot be directly written to files, however, they must first be converted to strings through serialization.
 
-### table.load
-**Usage:** `datalib.table.load(path)`
+### table.read
+**Usage:** `datalib.table.read(path)`
 
-Load table from file (`path`) and return through variable `table`. The only difference between `load_table` and `load_file` is that `load_table` always deserializes the data with `minetest.deserialize` to convert previously written string back to a table.
+Load table from file (`path`) and return through variable `table`. The only difference between `load_table` and `load_file` is that `load_table` always deserializes the data with `minetest.deserialize` to convert previously written string back to a table. Returns `false` if file specified by `path` does not exist.
 
 ### dofile
 **Usage:** `datalib.dofile(path)`
